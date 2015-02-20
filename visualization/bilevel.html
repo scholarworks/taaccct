@@ -52,6 +52,7 @@ d3.json("industries.json", function(error, root) {
       .value(function(d) { return d.size; })
       .nodes(root)
       .forEach(function(d) {
+    	d.label = d.name;
         d._children = d.children;
         d.sum = d.value;
         d.key = key(d);
