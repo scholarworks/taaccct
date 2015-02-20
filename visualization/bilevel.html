@@ -30,7 +30,7 @@ var luminance = d3.scale.sqrt()
 var svg = d3.select("body").append("svg")
     .attr("width", margin.left + margin.right)
     .attr("height", margin.top + margin.bottom)
-  .append("g")
+  	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var partition = d3.layout.partition()
@@ -73,10 +73,12 @@ d3.json("industries.json", function(error, root) {
 
   var path = svg.selectAll("path")
       .data(partition.nodes(root).slice(1))
-    .enter().append("path")
+      .enter().append("path")
       .attr("d", arc)
       .style("fill", function(d) { return d.fill; })
       .each(function(d) { this._current = updateArc(d); })
+      .append("svg:title")
+      .text(function(d) {return d.label; })
       .on("click", zoomIn);
 
   function zoomIn(p) {
