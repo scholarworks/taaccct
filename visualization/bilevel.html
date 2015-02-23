@@ -15,6 +15,7 @@ circle {
 </style>
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script>
 
 var margin = {top: 350, right: 480, bottom: 350, left: 480},
@@ -27,11 +28,20 @@ var luminance = d3.scale.sqrt()
     .clamp(true)
     .range([90, 20]);
 
+var tip = d3.tip()
+.attr('class', 'd3-tip')
+.offset([-10, 0])
+.html(function(d) {
+  return "<strong>Frequency:</strong> <span style='color:red'>TEST TEST TEST</span>";
+})
+
 var svg = d3.select("body").append("svg")
     .attr("width", margin.left + margin.right)
     .attr("height", margin.top + margin.bottom)
   	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.call(tip);
 
 var partition = d3.layout.partition()
     .sort(function(a, b) { return d3.ascending(a.name, b.name); })
