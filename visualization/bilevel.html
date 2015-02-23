@@ -119,7 +119,7 @@ d3.json("http://www.skillscommons.org/portal/api/industries.php", function(error
       .style("fill", function(d) { return d.fill; })
       .each(function(d) { this._current = updateArc(d); })
       .on("click", zoomIn)
-            .on('mouseover', tip.show)
+      .on('mouseover', tip.show)
       .on('mouseout', tip.hide);
 
   function zoomIn(p) {
@@ -136,7 +136,7 @@ d3.json("http://www.skillscommons.org/portal/api/industries.php", function(error
   // Zoom to the specified new root.
   function zoom(root, p) {
 	  
-	console.log("BEGIN zoom function");
+	root.call(tip);
 	
     if (document.documentElement.__transition__) return;
 
