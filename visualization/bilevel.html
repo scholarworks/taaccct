@@ -93,6 +93,9 @@ d3.json("http://www.skillscommons.org/portal/api/industries.php", function(error
 
   // Zoom to the specified new root.
   function zoom(root, p) {
+	  
+	console.log("BEGIN zoom function");
+	
     if (document.documentElement.__transition__) return;
 
     // Rescale outside angles to match the new layout.
