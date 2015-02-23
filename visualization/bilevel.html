@@ -136,7 +136,6 @@ d3.json("http://www.skillscommons.org/portal/api/industries.php", function(error
   // Zoom to the specified new root.
   function zoom(root, p) {
 
-	  svg.call(tip);
 	  
     if (document.documentElement.__transition__) return;
 
@@ -184,6 +183,9 @@ d3.json("http://www.skillscommons.org/portal/api/industries.php", function(error
           .style("fill-opacity", 1)
           .attrTween("d", function(d) { return arcTween.call(this, updateArc(d)); });
     });
+    
+    svg.call(tip);
+    
   }
 });
 
