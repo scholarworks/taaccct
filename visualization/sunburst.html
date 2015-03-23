@@ -47,178 +47,144 @@ circle {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 <script>
+var width = 840,
+    height = width,
+    radius = width / 2,
+    x = d3.scale.linear().range([0, 2 * Math.PI]),
+    y = d3.scale.pow().exponent(1.3).domain([0, 1]).range([0, radius]),
+    padding = 5,
+    duration = 1000;
 
-var margin = {top: 350, right: 480, bottom: 350, left: 480},
-    radius = Math.min(margin.top, margin.right, margin.bottom, margin.left) - 10;
+var div = d3.select("#vis");
 
-var hue = d3.scale.category10();
+div.select("img").remove();
 
-var luminance = d3.scale.sqrt()
-    .domain([0, 1e6])
-    .clamp(true)
-    .range([90, 20]);
+var vis = div.append("svg")
+    .attr("width", width + padding * 2)
+    .attr("height", height + padding * 2)
+  .append("g")
+    .attr("transform", "translate(" + [radius + padding, radius + padding] + ")");
 
-var tip = d3.tip()
-.attr('class', 'd3-tip')
-.offset([-10, 0])
-.html(function(d) {
-  return "<strong>Industry:</strong> <span style='color:red'>"+d.label+"</span>";
-});
-
-var svg = d3.select("body").append("svg")
-    .attr("width", margin.left + margin.right)
-    .attr("height", margin.top + margin.bottom)
-  	.append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    .call(tip);
-
-// svg.call(tip);
+div.append("p")
+    .attr("id", "intro")
+    .text("Click to zoom!");
 
 var partition = d3.layout.partition()
-    .sort(function(a, b) { return d3.ascending(a.name, b.name); })
-    .size([2 * Math.PI, radius]);
+    .sort(null)
+    .value(function(d) { return 5.8 - d.depth; });
 
 var arc = d3.svg.arc()
-    .startAngle(function(d) { return d.x; })
-    .endAngle(function(d) { return d.x + d.dx - .01 / (d.depth + .5); })
-    .innerRadius(function(d) { return radius / 3 * d.depth; })
-    .outerRadius(function(d) { return radius / 3 * (d.depth + 1) - 1; });
+    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+    .innerRadius(function(d) { return Math.max(0, d.y ? y(d.y) : d.y); })
+    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
 
-d3.json("http://www.skillscommons.org/portal/api/industries.php", function(error, root) {
-	
-	
-  // Compute the initial layout on the entire tree to sum sizes.
-  // Also compute the full name and fill color for each node,
-  // and stash the children so they can be restored as we descend.
-  partition
-      .value(function(d) { return d.size; })
-      .nodes(root)
-      .forEach(function(d) {
-    	d.label = d.name;
-        d._children = d.children;
-        d.sum = d.value;
-        d.key = key(d);
-        d.fill = fill(d);
-      });
+d3.json("wheel.json", function(error, json) {
+  var nodes = partition.nodes({children: json});
 
-  // Now redefine the value function to use the previously-computed sum.
-  partition
-      .children(function(d, depth) { return depth < 2 ? d._children : null; })
-      .value(function(d) { return d.sum; });
-
-  var center = svg.append("circle")
-      .attr("r", radius / 3)
-      .on("click", zoomOut);
-
-  center.append("title")
-      .text("zoom out");
-
-  var path = svg.selectAll("path")
-      .data(partition.nodes(root).slice(1))
-      .enter().append("path")
+  var path = vis.selectAll("path").data(nodes);
+  path.enter().append("path")
+      .attr("id", function(d, i) { return "path-" + i; })
       .attr("d", arc)
-      .style("fill", function(d) { return d.fill; })
-      .each(function(d) { this._current = updateArc(d); })
-      .on("click", zoomIn)
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide)
-      .call(tip);
+      .attr("fill-rule", "evenodd")
+      .style("fill", colour)
+      .on("click", click);
 
-  function zoomIn(p) {
-    if (p.depth > 1) p = p.parent;
-    if (!p.children) return;
-    // svg.call(tip);
-	zoom(p, p);
-  }
+  var text = vis.selectAll("text").data(nodes);
+  var textEnter = text.enter().append("text")
+      .style("fill-opacity", 1)
+      .style("fill", function(d) {
+        return brightness(d3.rgb(colour(d))) < 125 ? "#eee" : "#000";
+      })
+      .attr("text-anchor", function(d) {
+        return x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
+      })
+      .attr("dy", ".2em")
+      .attr("transform", function(d) {
+        var multiline = (d.name || "").split(" ").length > 1,
+            angle = x(d.x + d.dx / 2) * 180 / Math.PI - 90,
+            rotate = angle + (multiline ? -.5 : 0);
+        return "rotate(" + rotate + ")translate(" + (y(d.y) + padding) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
+      })
+      .on("click", click);
+  textEnter.append("tspan")
+      .attr("x", 0)
+      .text(function(d) { return d.depth ? d.name.split(" ")[0] : ""; });
+  textEnter.append("tspan")
+      .attr("x", 0)
+      .attr("dy", "1em")
+      .text(function(d) { return d.depth ? d.name.split(" ")[1] || "" : ""; });
 
-  function zoomOut(p) {
-    if (!p.parent) return;
-    zoom(p.parent, p);
-    svg.call(tip);
-  }
+  function click(d) {
+    path.transition()
+      .duration(duration)
+      .attrTween("d", arcTween(d));
 
-  // Zoom to the specified new root.
-  function zoom(root, p) {
-
-	  
-    if (document.documentElement.__transition__) return;
-
-    // Rescale outside angles to match the new layout.
-    var enterArc,
-        exitArc,
-        outsideAngle = d3.scale.linear().domain([0, 2 * Math.PI]);
-
-    function insideArc(d) {
-      return p.key > d.key
-          ? {depth: d.depth - 1, x: 0, dx: 0} : p.key < d.key
-          ? {depth: d.depth - 1, x: 2 * Math.PI, dx: 0}
-          : {depth: 0, x: 0, dx: 2 * Math.PI};
-    }
-
-    function outsideArc(d) {
-      return {depth: d.depth + 1, x: outsideAngle(d.x), dx: outsideAngle(d.x + d.dx) - outsideAngle(d.x)};
-    }
-
-    center.datum(root);
-
-    // When zooming in, arcs enter from the outside and exit to the inside.
-    // Entering outside arcs start from the old layout.
-    if (root === p) enterArc = outsideArc, exitArc = insideArc, outsideAngle.range([p.x, p.x + p.dx]);
-
-    path = path.data(partition.nodes(root).slice(1), function(d) { return d.key; });
-
-    // When zooming out, arcs enter from the inside and exit to the outside.
-    // Exiting outside arcs transition to the new layout.
-    if (root !== p) enterArc = insideArc, exitArc = outsideArc, outsideAngle.range([p.x, p.x + p.dx]);
-
-    d3.transition().duration(d3.event.altKey ? 7500 : 750).each(function() {
-      path.exit().transition()
-          .style("fill-opacity", function(d) { return d.depth === 1 + (root === p) ? 1 : 0; })
-          .attrTween("d", function(d) { return arcTween.call(this, exitArc(d)); })
-          .remove();
-
-      path.enter().append("path")
-          .style("fill-opacity", function(d) { return d.depth === 2 - (root === p) ? 1 : 0; })
-          .style("fill", function(d) { return d.fill; })
-          .on("click", zoomIn)
-          .each(function(d) { this._current = enterArc(d); });
-
-      path.transition()
-          .style("fill-opacity", 1)
-          .attrTween("d", function(d) { return arcTween.call(this, updateArc(d)); });
-    });
-    
-   // svg.call(tip);
-    
+    // Somewhat of a hack as we rely on arcTween updating the scales.
+    text.style("visibility", function(e) {
+          return isParentOf(d, e) ? null : d3.select(this).style("visibility");
+        })
+      .transition()
+        .duration(duration)
+        .attrTween("text-anchor", function(d) {
+          return function() {
+            return x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
+          };
+        })
+        .attrTween("transform", function(d) {
+          var multiline = (d.name || "").split(" ").length > 1;
+          return function() {
+            var angle = x(d.x + d.dx / 2) * 180 / Math.PI - 90,
+                rotate = angle + (multiline ? -.5 : 0);
+            return "rotate(" + rotate + ")translate(" + (y(d.y) + padding) + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
+          };
+        })
+        .style("fill-opacity", function(e) { return isParentOf(d, e) ? 1 : 1e-6; })
+        .each("end", function(e) {
+          d3.select(this).style("visibility", isParentOf(d, e) ? null : "hidden");
+        });
   }
 });
 
-function key(d) {
-  var k = [], p = d;
-  while (p.depth) k.push(p.name), p = p.parent;
-  return k.reverse().join(".");
+function isParentOf(p, c) {
+  if (p === c) return true;
+  if (p.children) {
+    return p.children.some(function(d) {
+      return isParentOf(d, c);
+    });
+  }
+  return false;
 }
 
-function fill(d) {
-  var p = d;
-  while (p.depth > 1) p = p.parent;
-  var c = d3.lab(hue(p.name));
-  c.l = luminance(d.sum);
-  return c;
+function colour(d) {
+  if (d.children) {
+    // There is a maximum of two children!
+    var colours = d.children.map(colour),
+        a = d3.hsl(colours[0]),
+        b = d3.hsl(colours[1]);
+    // L*a*b* might be better here...
+    return d3.hsl((a.h + b.h) / 2, a.s * 1.2, a.l / 1.2);
+  }
+  return d.colour || "#fff";
 }
 
-function arcTween(b) {
-  var i = d3.interpolate(this._current, b);
-  this._current = i(0);
-  return function(t) {
-    return arc(i(t));
+// Interpolate the scales!
+function arcTween(d) {
+  var my = maxY(d),
+      xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+      yd = d3.interpolate(y.domain(), [d.y, my]),
+      yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+  return function(d) {
+    return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
   };
 }
 
-function updateArc(d) {
-  return {depth: d.depth, x: d.x, dx: d.dx};
+function maxY(d) {
+  return d.children ? Math.max.apply(Math, d.children.map(maxY)) : d.y + d.dy;
 }
 
-d3.select(self.frameElement).style("height", margin.top + margin.bottom + "px");
-
+// http://www.w3.org/WAI/ER/WD-AERT/#color-contrast
+function brightness(rgb) {
+  return rgb.r * .299 + rgb.g * .587 + rgb.b * .114;
+}
 </script>
