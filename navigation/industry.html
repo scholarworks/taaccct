@@ -36,34 +36,37 @@ $(document).ready(function() {
 
 					var $level2AccordionHeading = $('<div class="accordion-heading" />');
 					var $level2AccordionToggle = $('<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" />');
+
 					$level2AccordionToggle.append(child.name);
 					$level2AccordionHeading.append($level2AccordionToggle);
 
-/*					
+					var $level2AccordingInner = $('<div id="collapseTwo" class="accordion-body collapse in" />');
+					var $level2AccordionInnerContent = $('<div class="accordion-inner" />');
+
+					
 					var parent_size = 0;
 					
 					if(child.size) {
 						root_size += child.size;
 					} else {
-
-						$child_ul = $('<ul />');
 						
 						$.each(child.children, function (cc, child_child) {
-							var $child_li = $('<li />');
-							$child_li.append(child_child.name);
-							$child_ul.append($child_li);
+							$level2Content = $('<a />');
+							$level2Content.append(child_child.name);
+							$level2AccordionInnerContent.append($level2Content);
 							// console.log(child_child);
 							if(child_child.size) {
 								root_size += child_child.size;
 								parent_size += child_child.size;
 							}
 						});
-						$parent_li.append($child_ul);
+						$level2AccordingInner.append($level2AccordionInnerContent);
 					}
 
-*/
+
 					
 					$level2AccordionGroup.append($level2AccordionHeading);
+					$level2AccordionGroup.append($level2AccordingInner);
 					$level2Accordion.append($level2AccordionGroup);
 					$topAccordionInnerContent.append($level2Accordion);
 					// $parent_ul.append($parent_li);
