@@ -7,7 +7,7 @@
 
 <script>
 $(document).ready(function() {
-	// alert("begin function");
+
 	var industryAPI = "http://www.skillscommons.org/portal/api/industries.php";
 	$.getJSON( industryAPI )
 		.done(function(data) {
@@ -15,26 +15,25 @@ $(document).ready(function() {
 			var $ul_top = $("<ul></ul>");
 
 			$.each(data.children, function (i, item) {
-				// console.log(item);
 				
 				var $li_root = $('<li />');
 				$li_root.append(item.name);
 
-/*				
 				var root_size = 0;
 				
+				var $parent_ul = $('<ul />');
+
 				$.each(item.children, function (c, child) {
-					// console.log(child);
-				
+
 					var $parent_li = $('<li />');
 					$parent_li.append(child.name);
 					
 					var parent_size = 0;
-					
+/*					
 					if(child.size) {
 						root_size += child.size;
 					} else {
-						var $ul_parent = $('<ul /');
+
 						$.each(child.children, function (cc, child_child) {
 							var $child_li = $('<li />');
 							$child_li.append(child_child.name);
@@ -47,10 +46,11 @@ $(document).ready(function() {
 						});
 						$parent_li.append($ul_parent);
 					}
-					$li_root.append($li_root);
+*/
+					$parent_ul.append($parent_li);
 				});
-				*/
-				$ul_top.append($li_root);
+
+				$ul_top.append($parent_ul);
 			});
 
 
