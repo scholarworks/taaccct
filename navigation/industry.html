@@ -37,12 +37,12 @@ $(document).ready(function() {
 				
 				var root_size = 0;
 				
-				var $level2Accordion = $('<div class="accordion" id="accordion2" />');
-				var $level2AccordionGroup = $('<div class="accordion-group" />');
+				var $level2Accordion = $('<div class="panel-group" id="accordion2" />');
+				var $level2AccordionGroup = $('<div class="panel panel-default" />');
 
 				$.each(item.children, function (c, child) {
 
-					var $level2AccordionHeading = $('<div class="accordion-heading" />');
+					var $level2AccordionHeading = $('<h4 class="panel-title" />');
 					var $level2AccordionToggle = $('<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" />');
 
 					$level2AccordionToggle.append(child.name);
