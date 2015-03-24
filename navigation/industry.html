@@ -12,26 +12,46 @@ $(document).ready(function() {
 	$.getJSON( industryAPI )
 		.done(function(data) {
 			console.log("Just finished json load");
+			var $ul_top = $('<ul />');
 			$.each(data.children, function (i, item) {
 				// console.log(item);
+				
+				var $li_root = $('<li />');
+				$li_root.append(item.name);
+				
 				var root_size = 0;
+				
 				$.each(item.children, function (c, child) {
 					// console.log(child);
+				
+					var $parent_li = $('<li />');
+					$parent_li.append(child.name);
+					
 					var parent_size = 0;
+					
 					if(child.size) {
 						root_size += child.size;
 					} else {
+						var $ul_parent = $('<ul /');
 						$.each(child.children, function (cc, child_child) {
+							var $child_li = $('<li />');
+							$child_li.append(child_child.name);
+							$ul_parent.append($child_li);
 							// console.log(child_child);
 							if(child_child.size) {
 								root_size += child_child.size;
 								parent_size += child_child.size;
 							}
 						});
+						$parent_li.append($ul_parent);
 					}
+					$li_root.append($li_root);
 				});
+				$ul_top.append($li_root);
 				console.log(root_size);
 			});
+			
+			$('#categories').html($ul_top);
 		});
 	// alert("end function");
 });
