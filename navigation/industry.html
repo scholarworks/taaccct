@@ -14,6 +14,9 @@ $(document).ready(function() {
 			console.log("Just finished json load");
 			$.each(data.children, function (i, item) {
 				console.log(item);
+				$.each(item.children, function (c, child) {
+					console.log(child);
+				});
 			});
 		});
 	// alert("end function");
