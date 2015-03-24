@@ -12,6 +12,7 @@
 	var industryAPI = "http://www.skillscommons.org/portal/api/industries.php";
 	$.getJSON( industryAPI )
 		.done(function(data) {
+			console.log("Just finished json load");
 			$.each(data.children, function (i, item) {
 				console.log("here");
 			});
