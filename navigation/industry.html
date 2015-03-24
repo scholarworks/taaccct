@@ -31,24 +31,26 @@ $(document).ready(function() {
 					$parent_li.append(child.name);
 					
 					var parent_size = 0;
-/*					
+					
 					if(child.size) {
 						root_size += child.size;
 					} else {
 
+						$child_ul = $('<ul />');
+						
 						$.each(child.children, function (cc, child_child) {
 							var $child_li = $('<li />');
 							$child_li.append(child_child.name);
-							$ul_parent.append($child_li);
+							$child_ul.append($child_li);
 							// console.log(child_child);
 							if(child_child.size) {
 								root_size += child_child.size;
 								parent_size += child_child.size;
 							}
 						});
-						$parent_li.append($ul_parent);
+						$parent_li.append($child_ul);
 					}
-*/
+
 					$parent_ul.append($parent_li);
 				});
 //				$top_parent_li.append($parent_ul);
