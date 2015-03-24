@@ -18,7 +18,8 @@ $(document).ready(function() {
 			$.each(data.children, function (i, item) {
 				
 				var $topAccordionHeading = $('<div class="accordion-heading" />');
-				var $topAccordionToggle = $('<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">' . $item.name . '</a>');
+				var name = item.name;
+				var $topAccordionToggle = $('<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">' . name . '</a>');
 				$topAccordionHeading.append($topAccordionToggle);
 
 /*
