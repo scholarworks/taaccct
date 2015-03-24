@@ -43,13 +43,13 @@ $(document).ready(function() {
 				$.each(item.children, function (c, child) {
 
 					var $level2AccordionHeading = $('<h4 class="panel-title" />');
-					var $level2AccordionToggle = $('<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" />');
+					var $level2AccordionToggle = $('<a data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo" />');
 
 					$level2AccordionToggle.append(child.name);
 					$level2AccordionHeading.append($level2AccordionToggle);
 
-					var $level2AccordingInner = $('<div id="collapseTwo" class="accordion-body collapse in" />');
-					var $level2AccordionInnerContent = $('<div class="accordion-inner" />');
+					var $level2AccordingInner = $('<div id="collapseTwo" class="panel-collapse collapse in" />');
+					var $level2AccordionInnerContent = $('<div class="panel-body" />');
 
 					
 					var parent_size = 0;
