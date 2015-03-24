@@ -11,7 +11,7 @@ $(document).ready(function() {
 	var industryAPI = "http://www.skillscommons.org/portal/api/industries.php";
 	$.getJSON( industryAPI )
 		.done(function(data) {
-			console.log("Just finished json load");
+
 			var $topAccordion = $('<div class="accordion" id="accordion1" />');
 			var $topAccordionGroup = $('<div class="accordion-group" />');
 			
@@ -22,20 +22,24 @@ $(document).ready(function() {
 				$topAccordionToggle.append(item.name);
 				$topAccordionHeading.append($topAccordionToggle);
 
-/*
-				$li_root.append(item.name);
-				$ul_top.append($li_root);
+				var $topAccordingInner = $('<div id="collapseOne" class="accordion-body collapse in" />');
+				var $topAccordionInnerContent = $('<div class="accordion-inner" />');
+			
+
 				
 				var root_size = 0;
 				
-				var $top_parent_li = $('<li />');
-				var $parent_ul = $('<ul />');
+				var $level2Accordion = $('<div class="accordion" id="accordion2" />');
+				var $level2AccordionGroup = $('<div class="accordion-group" />');
+				var $level2AccordionHeading = $('<div class="accordion-heading" />');
+				var $level2AccordionToggle = $('<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" />');
 
 				$.each(item.children, function (c, child) {
 
-					var $parent_li = $('<li />');
-					$parent_li.append(child.name);
-					
+					$level2AccordionToggle.append(child.name);
+					$level2AccordionHeading.append($level2AccordionToggle);
+
+/*					
 					var parent_size = 0;
 					
 					if(child.size) {
@@ -57,11 +61,14 @@ $(document).ready(function() {
 						$parent_li.append($child_ul);
 					}
 
-					$parent_ul.append($parent_li);
+*/
+					
+					// $parent_ul.append($parent_li);
 				});
 //				$top_parent_li.append($parent_ul);
 */
-				$topAccordion.append($topAccordionHeading);
+				$topAccordionGroup.append($topAccordionHeading);
+				$topAccordion.append($topAccordionGroup);
 
 			});
 
