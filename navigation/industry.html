@@ -18,15 +18,17 @@ $(document).ready(function() {
 	$.getJSON( industryAPI )
 		.done(function(data) {
 
-			var $topAccordion = $('<div class="accordion" id="accordion1" />');
-			var $topAccordionGroup = $('<div class="accordion-group" />');
+			var $topAccordion = $('<div class="panel-group" id="accordion1" />');
+			var $topAccordionGroup = $('<div class="panel panel-default" />');
 			
 			$.each(data.children, function (i, item) {
 				
-				var $topAccordionHeading = $('<div class="accordion-heading" />');
-				var $topAccordionToggle = $('<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" />');
+				var $topAccordionHeading = $('<div class="panel-heading" />');
+				var $topAccordionTitle = $('<div class="panel-title" />');
+				var $topAccordionToggle = $('<a data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" />');
 				$topAccordionToggle.append(item.name);
-				$topAccordionHeading.append($topAccordionToggle);
+				$topAccordionTitle.append($topAccordionToggle);
+				$topAccordionHeading.append($topAccordionTitle);
 
 				var $topAccordingInner = $('<div id="collapseOne" class="accordion-body collapse in" />');
 				var $topAccordionInnerContent = $('<div class="accordion-inner" />');
