@@ -12,11 +12,16 @@ $(document).ready(function() {
 	$.getJSON( industryAPI )
 		.done(function(data) {
 			console.log("Just finished json load");
-			var $ul_top = $('<div class="accordion" id="accordion1" />');
-
+			var $topAccordion = $('<div class="accordion" id="accordion1" />');
+			var $topAccordionGroup = $('<div class="accordion-group" />');
+			
 			$.each(data.children, function (i, item) {
 				
-				var $li_root = $('<li />');
+				var $topAccordionHeading = $('<div class="accordion-heading" />');
+				var $topAccordionToggle = $('<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">' . $item.name . '</a>');
+				$topAccordionHeading.append($topAccordionToggle);
+
+/*
 				$li_root.append(item.name);
 				$ul_top.append($li_root);
 				
@@ -54,11 +59,13 @@ $(document).ready(function() {
 					$parent_ul.append($parent_li);
 				});
 //				$top_parent_li.append($parent_ul);
-				$ul_top.append($parent_ul);
+*/
+				$topAccordion.append($topAccordionHeading);
+
 			});
 
 
-			$('#categories').html($ul_top);
+			$('#categories').html($topAccordion);
 
 		});
 	// alert("end function");
