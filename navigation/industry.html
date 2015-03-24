@@ -13,13 +13,14 @@ $(document).ready(function() {
 		.done(function(data) {
 			console.log("Just finished json load");
 			var $ul_top = $("<ul></ul>");
-/*
+
 			$.each(data.children, function (i, item) {
 				// console.log(item);
 				
 				var $li_root = $('<li />');
 				$li_root.append(item.name);
-				
+
+/*				
 				var root_size = 0;
 				
 				$.each(item.children, function (c, child) {
@@ -50,10 +51,12 @@ $(document).ready(function() {
 				});
 				$ul_top.append($li_root);
 				console.log(root_size);
-			});
-			
-			$('#categories').html($ul_top);
 */
+			});
+
+
+			$('#categories').html($ul_top);
+
 		});
 	// alert("end function");
 });
