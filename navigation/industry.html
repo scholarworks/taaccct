@@ -12,7 +12,7 @@ $(document).ready(function() {
 	$.getJSON( industryAPI )
 		.done(function(data) {
 			console.log("Just finished json load");
-			var $ul_top = $('<ul />');
+			var $ul_top = $("<ul/>");
 			$.each(data.children, function (i, item) {
 				// console.log(item);
 				
