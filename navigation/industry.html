@@ -21,6 +21,7 @@ $(document).ready(function() {
 
 				var root_size = 0;
 				
+				var $top_parent_li = $('<li />');
 				var $parent_ul = $('<ul />');
 
 				$.each(item.children, function (c, child) {
@@ -49,8 +50,8 @@ $(document).ready(function() {
 */
 					$parent_ul.append($parent_li);
 				});
-
-				$ul_top.append($parent_ul);
+				$top_parent_li.append($parent_ul);
+				$ul_top.append($top_parent_li);
 			});
 
 
