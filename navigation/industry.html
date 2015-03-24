@@ -31,11 +31,11 @@ $(document).ready(function() {
 				
 				var $level2Accordion = $('<div class="accordion" id="accordion2" />');
 				var $level2AccordionGroup = $('<div class="accordion-group" />');
-				var $level2AccordionHeading = $('<div class="accordion-heading" />');
-				var $level2AccordionToggle = $('<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" />');
 
 				$.each(item.children, function (c, child) {
 
+					var $level2AccordionHeading = $('<div class="accordion-heading" />');
+					var $level2AccordionToggle = $('<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" />');
 					$level2AccordionToggle.append(child.name);
 					$level2AccordionHeading.append($level2AccordionToggle);
 
@@ -63,6 +63,8 @@ $(document).ready(function() {
 
 */
 					
+					$level2AccordionGroup.append($level2AccordionHeading);
+					$level2Accordion.append($level2AccordionGroup);
 					// $parent_ul.append($parent_li);
 				});
 //				$top_parent_li.append($parent_ul);
