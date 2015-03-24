@@ -13,13 +13,24 @@ $(document).ready(function() {
 		.done(function(data) {
 			console.log("Just finished json load");
 			$.each(data.children, function (i, item) {
-				console.log(item);
+				// console.log(item);
+				var root_size = 0;
 				$.each(item.children, function (c, child) {
-					console.log(child);
-					$.each(child.children, function (cc, child_child) {
-						console.log(child_child);
-					});
+					// console.log(child);
+					var parent_size = 0;
+					if(child.size) {
+						root_size += child.size;
+					} else {
+						$.each(child.children, function (cc, child_child) {
+							// console.log(child_child);
+							if(child_child.size) {
+								root_size += child_child.size;
+								parent_size += child_child.size;
+							}
+						});
+					}
 				});
+				console.log(root_size);
 			});
 		});
 	// alert("end function");
