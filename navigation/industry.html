@@ -25,13 +25,12 @@ $(document).ready(function() {
 				
 				var $topAccordionHeading = $('<div class="panel-heading" />');
 				var $topAccordionTitle = $('<div class="panel-title" />');
-				var $topAccordionToggle = $('<a data-toggle="collapse" data-parent="#accordion1" />');
-				$topAccordionToggle.attr( "href", "#collapseOne" . i);
+				var $topAccordionToggle = $('<a data-toggle="collapse" data-parent="#accordion1" href="#' + item.name + '"/>');
 				$topAccordionToggle.append(item.name);
 				$topAccordionTitle.append($topAccordionToggle);
 				$topAccordionHeading.append($topAccordionTitle);
 
-				var $topAccordingInner = $('<div id="collapseOne" class="accordion-body collapse in" />');
+				var $topAccordingInner = $('<div id="'+ item.name +'" class="accordion-body collapse in" />');
 				var $topAccordionInnerContent = $('<div class="accordion-inner" />');
 			
 
