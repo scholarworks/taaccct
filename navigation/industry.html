@@ -16,6 +16,9 @@ $(document).ready(function() {
 				console.log(item);
 				$.each(item.children, function (c, child) {
 					console.log(child);
+					$.each(child.children, function (cc, child_child) {
+						console.log(child_child);
+					});
 				});
 			});
 		});
