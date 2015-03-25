@@ -22,14 +22,14 @@ $(document).ready(function() {
 	$.getJSON( industryAPI )
 		.done(function(data) {
 
-			var $topAccordion = $('<div class="panel-group" id="accordion1" />');
-			var $topAccordionGroup = $('<div class="panel panel-default" />');
+			var $topAccordion = $('<div class="panel panel-group" id="main" />');
+			var $topAccordionGroup = $('<div class="panel-body" />');
 			
 			$.each(data.children, function (i, item) {
 				
 				var $topAccordionHeading = $('<div class="panel-heading" />');
 				var $topAccordionTitle = $('<h4 class="panel-title" />');
-				var $topAccordionToggle = $('<a data-toggle="collapse" data-parent="#accordion1" href="#' + item.name + '"/>');
+				var $topAccordionToggle = $('<a data-toggle="collapse" data-parent="#main" href="#' + item.name + '"/>');
 				$topAccordionToggle.append(item.name);
 				$topAccordionTitle.append($topAccordionToggle);
 				$topAccordionHeading.append($topAccordionTitle);
