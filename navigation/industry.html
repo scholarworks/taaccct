@@ -23,41 +23,41 @@ $(document).ready(function() {
 		.done(function(data) {
 
 			var $topAccordion = $('<div class="panel panel-group" id="main" />');
-			var $topAccordionGroup = $('<div class="panel-body" />');
+			var $topAccordionBody = $('<div class="panel-body" />');
+			var $topAccordionDefault = $('<div class="panel panel-default" />');
 			
 			$.each(data.children, function (i, item) {
 				
-				var $topAccordionHeading = $('<div class="panel-heading" />');
-				var $topAccordionTitle = $('<h4 class="panel-title" />');
-				var $topAccordionToggle = $('<a data-toggle="collapse" data-parent="#main" href="#' + item.name + '"/>');
-				$topAccordionToggle.append(item.name);
-				$topAccordionTitle.append($topAccordionToggle);
-				$topAccordionHeading.append($topAccordionTitle);
+				var $level1Heading = $('<div class="panel-heading" />');
+				var $level1Title = $('<h4 class="panel-title" />');
+				var $level1Anchor = $('<a data-toggle="collapse" data-parent="#main" href="#' + item.name + '"/>');
+				$level1Anchor.append(item.name);
+				$level1Title.append($level1Anchor);
+				$level1Heading.append($level1Title);
 
-				var $topAccordingInner = $('<div id="'+ item.name +'" class="panel-collapse collapse in" />');
-				var $topAccordionInnerContent = $('<div class="panel-body" />');
-			
-
-				
-				var root_size = 0;
-				
-				var $level2Accordion = $('<div class="panel-group" id="accordion2" />');
-				var $level2AccordionGroup = $('<div class="panel panel-default" />');
+				$topAccordionDefault.append($level1Heading);
+							
+				var $level2Panel = $('<div id="' + item.name '" class="panel-collapse collapse" />');
+				var $level2PanelBody = $('<div class="panel-body" />"');
+				var $level2PanelGroup = $('<div class="panel-group" id="accordion2" />');
+				var $level2PanelDefault = $('<div class="panel panel-default" />');
 
 				$.each(item.children, function (c, child) {
 
-					var $level2AccordionHeading = $('<div class="panel-heading" />');
-					var $level2AccordionTitle = $('<h4 class="panel-title" />');
-					var $level2AccordionToggle = $('<a data-toggle="collapse" data-parent="#accordion2" href="#' + item.name + "_" + c + '" />');
+					var $level2Heading = $('<div class="panel-heading" />');
+					var $level2Title = $('<h4 class="panel-title" />');
+					var $level2Anchor = $('<a data-toggle="collapse" data-parent="#accordion2" href="#' + item.name + "_" + c + '" />');
 
-					$level2AccordionToggle.append(child.name);
-					$level2AccordionTitle.append($level2AccordionToggle);
-					$level2AccordionHeading.append($level2AccordionTitle);
+					$level2Anchor.append(child.name);
+					$level2Title.append($level2Anchor);
+					$level2Heading.append($level2Title);
+					
+					$level2PanelDefault.append($level2Heading);
 
-					var $level2AccordingInner = $('<div id="collapseTwo" class="panel-collapse collapse in" />');
-					var $level2AccordionInnerContent = $('<div class="panel-body" />');
-					var $level2Table = $('<table class="table" />');
-					var $level2TableBody = $('<tbody />');
+					var $level3Panel = $('<div id="collapseTwo" class="panel-collapse collapse" />');
+					var $level3PanelBody = $('<div class="panel-body" />');
+					var $level3Table = $('<table class="table" />');
+					var $level3TableBody = $('<tbody />');
 					
 					var parent_size = 0;
 					
@@ -66,35 +66,36 @@ $(document).ready(function() {
 					} else {
 						
 						$.each(child.children, function (cc, child_child) {
-							$level2Content = '<tr><td><a>' + child_child.name + '</a></td></tr>';
-							$level2TableBody.append($level2Content);
+							$level3Content = '<tr><td><a>' + child_child.name + '</a></td></tr>';
+							$level3TableBody.append($level3Content);
 							// console.log(child_child);
 							if(child_child.size) {
 								root_size += child_child.size;
 								parent_size += child_child.size;
 							}
 						});
-						$level2Table.append($level2TableBody);
-						$level2AccordionInnerContent.append($level2Table);
-						$level2AccordingInner.append($level2AccordionInnerContent);
+						$level3Table.append($level3TableBody);
+						$level3PanelBody.append($level3Table);
+						$level3Panel.append($level3PanelBody);
 					}
 
 
 					
-					$level2AccordionGroup.append($level2AccordionHeading);
-					$level2AccordionGroup.append($level2AccordingInner);
-					$level2Accordion.append($level2AccordionGroup);
-					$topAccordionInnerContent.append($level2Accordion);
+					$level2PanelDefault.append($level3Panel);
+					$level2PanelGroup.append($level2PanelDefault);
+					$level2PanelBody.append($level2PanelGroup);
+					// $topAccordionInnerContent.append($level2Accordion);
 					// $parent_ul.append($parent_li);
 				});
 				
-				$topAccordingInner.append($topAccordionInnerContent);
+				$topAccordionDefault.append($level2PanelBody);
 				
 //				$top_parent_li.append($parent_ul);
 
-				$topAccordionGroup.append($topAccordionHeading);
-				$topAccordionGroup.append($topAccordingInner);
-				$topAccordion.append($topAccordionGroup);
+				
+				$topAccordionBody.append($topAccordionDefault);
+				$topAccordion.append($topAccordionBody);
+				// $topAccordion.append($topAccordionGroup);
 
 			});
 
