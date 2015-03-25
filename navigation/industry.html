@@ -30,11 +30,9 @@ $(document).ready(function() {
 				
 				var $level1Heading = $('<div class="panel-heading" />');
 				var $level1Title = $('<h4 class="panel-title" />');
-				$level1Title.append(item.name);
 				var $level1Anchor = $('<a data-toggle="collapse" data-parent="#main" href="#' + i + '"/>');
-				$level1Anchor.append('<span class="glyphicon glyphicon-plus"></span>');
+				$level1Anchor.append(item.name);
 				$level1Title.append($level1Anchor);
-				$level1Title.append('<span class="glyphicon glyphicon-chevron-right"></span>');
 				
 				$level1Heading.append($level1Title);
 
