@@ -66,7 +66,7 @@ $(document).ready(function() {
 					} else {
 						
 						$.each(child.children, function (cc, child_child) {
-							$level2Content = t('<tr><td><a>' + child_child.name + '</a></td></tr>');
+							$level2Content = '<tr><td><a>' + child_child.name + '</a></td></tr>';
 							$level2TableBody.append($level2Content);
 							// console.log(child_child);
 							if(child_child.size) {
