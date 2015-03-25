@@ -82,13 +82,14 @@ $(document).ready(function() {
 
 					
 					$level2PanelDefault.append($level3Panel);
-					$level2PanelGroup.append($level2PanelDefault);
-					$level2PanelBody.append($level2PanelGroup);
 					// $topAccordionInnerContent.append($level2Accordion);
 					// $parent_ul.append($parent_li);
 				});
 				
-				$topAccordionDefault.append($level2PanelBody);
+				$level2PanelGroup.append($level2PanelDefault);
+				$level2PanelBody.append($level2PanelGroup);
+				$level2Panel.append($level2PanelBody);
+				$topAccordionDefault.append($level2Panel);
 				
 //				$top_parent_li.append($parent_ul);
 
