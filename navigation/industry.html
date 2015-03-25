@@ -66,7 +66,7 @@ $(document).ready(function() {
 					} else {
 						
 						$.each(child.children, function (cc, child_child) {
-							$level3Content = '<tr><td><a href="https://www.skillscommons.org/browse?value='+item.name+'+'+child.name+'+'+child_child.name+'&type=industry">' + child_child.name + '</a></td></tr>';
+							$level3Content = '<tr><td><a href="https://www.skillscommons.org/browse?value='+item.name+'+--+'+child.name+'+--+'+child_child.name+'&type=industry">' + child_child.name + '</a></td></tr>';
 							$level3TableBody.append($level3Content);
 							// console.log(child_child);
 							if(child_child.size) {
