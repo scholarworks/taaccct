@@ -46,7 +46,7 @@ $(document).ready(function() {
 
 					var $level2Heading = $('<div class="panel-heading" />');
 					var $level2Title = $('<h4 class="panel-title" />');
-					var $level2Anchor = $('<a data-toggle="collapse" data-parent="#accordion2" href="#' + item.name + "_" + c + '" />');
+					var $level2Anchor = $('<a data-toggle="collapse" data-parent="#' + item.name +' href="#' + item.name + "_" + c + '" />');
 
 					$level2Anchor.append(child.name);
 					$level2Title.append($level2Anchor);
@@ -54,7 +54,7 @@ $(document).ready(function() {
 					
 					$level2PanelDefault.append($level2Heading);
 
-					var $level3Panel = $('<div id="collapseTwo" class="panel-collapse collapse" />');
+					var $level3Panel = $('<div id="'+ item.name + '_' + c + '" class="panel-collapse collapse" />');
 					var $level3PanelBody = $('<div class="panel-body" />');
 					var $level3Table = $('<table class="table" />');
 					var $level3TableBody = $('<tbody />');
