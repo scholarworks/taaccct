@@ -39,14 +39,14 @@ $(document).ready(function() {
 							
 				var $level2Panel = $('<div id="' + item.name + '" class="panel-collapse collapse" />');
 				var $level2PanelBody = $('<div class="panel-body" />"');
-				var $level2PanelGroup = $('<div class="panel-group" id="accordion2" />');
+				var $level2PanelGroup = $('<div class="panel-group" id="'+item.name+''" />');
 				var $level2PanelDefault = $('<div class="panel panel-default" />');
 
 				$.each(item.children, function (c, child) {
 
 					var $level2Heading = $('<div class="panel-heading" />');
 					var $level2Title = $('<h4 class="panel-title" />');
-					var $level2Anchor = $('<a data-toggle="collapse" data-parent="#' + item.name +'" href="#' + item.name + "_" + c + '" />');
+					var $level2Anchor = $('<a data-toggle="collapse" data-parent="' + item.name +'" href="#' + item.name + "_" + c + '" />');
 
 					$level2Anchor.append(child.name);
 					$level2Title.append($level2Anchor);
