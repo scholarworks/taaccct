@@ -76,9 +76,7 @@ $(document).ready(function() {
 					
 					var parent_size = 0;
 					
-					if(!child.children.length) {
-						// $level2Anchor.append('<span class="glyphicon glyphicon-chevron-right" style="float: right;"></span>');
-					} else {
+					if ("children" in child) {
 						// $level2Anchor.append('<span class="glyphicon glyphicon-plus" style="float: right;"></span>');
 						$.each(child.children, function (cc, child_child) {
 							$level3Content = '<tr><td><a href="https://www.skillscommons.org/browse?value='+item.name+'+--+'+child.name+'+--+'+child_child.name+'&type=industry">' + child_child.name + '</a></td></tr>';
