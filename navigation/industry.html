@@ -79,6 +79,9 @@ $(document).ready(function() {
 					
 					if ("children" in child) {
 						// $level2Anchor.append('<span class="glyphicon glyphicon-plus" style="float: right;"></span>');
+						$level3Content = '<tr><td><a href="https://www.skillscommons.org/discover?rpp=10&query=%22'+item.name+'+--+'+child.name+'%22">View All</a></td></tr>';
+						$level3TableBody.append($level3Content);
+
 						$.each(child.children, function (cc, child_child) {
 							$level3Content = '<tr><td><a href="https://www.skillscommons.org/discover?rpp=10&query=%22'+item.name+'+--+'+child.name+'+--+'+child_child.name+'%22">' + child_child.name + '</a></td></tr>';
 							$level3TableBody.append($level3Content);
