@@ -32,6 +32,7 @@ $(document).ready(function() {
 				var $level1Title = $('<h4 class="panel-title" />');
 				var $level1Anchor = $('<a data-toggle="collapse" data-parent="#main" href="#' + i + '"/>');
 				$level1Anchor.append(item.name);
+				$level1Anchor.append('<span class="glyphicon glyphicon-plus" style="float: right;"></span>');
 				$level1Title.append($level1Anchor);
 				
 				$level1Heading.append($level1Title);
@@ -40,7 +41,7 @@ $(document).ready(function() {
 							
 				var $level2Panel = $('<div id="' + i + '" class="panel-collapse collapse" />');
 				var $level2PanelBody = $('<div class="panel-body" />"');
-				$level2PanelBody.append('<p>Here will be some intro text for search.</p>');
+				$level2PanelBody.append('<p><a href="">Search All</a></p>');
 				var $level2PanelGroup = $('<div class="panel-group" id="'+i+'" />');
 				var $level2PanelDefault = $('<div class="panel panel-default" />');
 
