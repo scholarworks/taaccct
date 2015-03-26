@@ -45,6 +45,7 @@ $(document).ready(function() {
 				var $level2PanelGroup = $('<div class="panel-group" id="'+i+'" />');
 				var $level2PanelDefault = $('<div class="panel panel-default" />');
 
+				$level2PanelDefault.append('<div class="panel-heading"><h4 class="panel-title"><a href="https://www.skillscommons.org/discover?query=%22'+item.name+'%22">View All<span class="glyphicon glyphicon-chevron-right" style="float: right;"></span></a></h4></div>' );
 				$.each(item.children, function (c, child) {
 
 					var $level2Heading = $('<div class="panel-heading" />');
