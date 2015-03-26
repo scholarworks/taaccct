@@ -54,7 +54,7 @@ $(document).ready(function() {
 				
 					// console.log(child.children);
 					if("size" in child) {
-						$level2Anchor = $('<a href="https://www.skillscommons.org/browse?value='+item.name+'+--+'+child.name+'&type=industry" target="_parent" />');
+						$level2Anchor = $('<a href="https://www.skillscommons.org/discover?rpp=10&query=\"'+item.name+'+--+'+child.name+'\"" target="_parent" />');
 						$level2Anchor.append(child.name);
 						$level2Anchor.append('<span class="glyphicon glyphicon-chevron-right" style="float: right;"></span>');
 					} else {
