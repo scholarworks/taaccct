@@ -49,14 +49,24 @@ $(document).ready(function() {
 
 					var $level2Heading = $('<div class="panel-heading" />');
 					var $level2Title = $('<h4 class="panel-title" />');
-					var $level2Anchor = $('<a data-toggle="collapse" data-parent="' + i +'" href="#' + i + "_" + c + '" />');
-
-					$level2Anchor.append(child.name);
+					var $level2Anchor;
+					
+				
+					if(!child.children.length) {
+						$level2Anchor = $('<a data-toggle="collapse" data-parent="' + i +'" href="https://www.skillscommons.org/browse?value='+item.name+'+--+'+child.name+'&type=industry" />');
+						$level2Anchor.append(child.name);
+						$level2Anchor.append('<span class="glyphicon glyphicon-chevron-right" style="float: right;"></span>');
+					} else {
+						$level2Anchor = $('<a data-toggle="collapse" data-parent="' + i +'" href="' + i + "_" + c + '" />');
+						$level2Anchor.append(child.name);
+						$level2Anchor.append('<span class="glyphicon glyphicon-plus" style="float: right;"></span>');
+					}
 					$level2Title.append($level2Anchor);
 					$level2Heading.append($level2Title);
 					
 					$level2PanelDefault.append($level2Heading);
 
+					
 					var $level3Panel = $('<div id="'+ i + '_' + c + '" class="panel-collapse collapse" />');
 					var $level3PanelBody = $('<div class="panel-body" />');
 					$level3PanelBody.append('<p>Here will be some intro text for search.</p>');
