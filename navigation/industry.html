@@ -31,7 +31,7 @@ $(document).ready(function() {
 				var $level1Heading = $('<div class="panel-heading" />');
 				var $level1Title = $('<h4 class="panel-title" />');
 				var $level1Anchor = $('<a data-toggle="collapse" data-parent="#main" href="#' + i + '"/>');
-				$level1Anchor.append(item.naic_code + ': ' + item.name);
+				$level1Anchor.append(item.name);
 				$level1Anchor.append('<span class="glyphicon glyphicon-plus" style="float: right;"></span>');
 				$level1Title.append($level1Anchor);
 				
