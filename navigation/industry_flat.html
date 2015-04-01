@@ -24,7 +24,7 @@ $(document).ready(function() {
 	$.getJSON( industryAPI )
 		.done(function(data) {
 
-			var $topHeading = $('<h1/>');
+			var $topHeading = $('<h1 />');
 			$topHeading.append("Browse by Industry");
 			
 			var $topUL = $('<ul/>');
@@ -65,7 +65,7 @@ $(document).ready(function() {
 			});
 
 
-			$('#categories').html($topHeading + $topUL);
+			$('#categories').html.append($topHeading);
 
 		});
 	// alert("end function");
