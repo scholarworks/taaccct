@@ -24,103 +24,48 @@ $(document).ready(function() {
 	$.getJSON( industryAPI )
 		.done(function(data) {
 
-			var $topAccordion = $('<div class="panel panel-group" id="main" />');
-			var $topAccordionBody = $('<div class="panel-body" />');
-			var $topAccordionDefault = $('<div class="panel panel-default" />');
+			var $topHeading = $('<h1/>');
+			$topHeading.append("Browse by Industry");
+			
+			var $topUL = $('<ul/>');
 			
 			$.each(data.children, function (i, item) {
 				
-				var $level1Heading = $('<div class="panel-heading" />');
-				var $level1Title = $('<h4 class="panel-title" />');
-				var $level1Anchor = $('<a data-toggle="collapse" data-parent="#main" href="#' + i + '"/>');
-				$level1Anchor.append(item.name);
-				$level1Anchor.append('<span class="glyphicon glyphicon-plus" style="float: right;"></span>');
-				$level1Title.append($level1Anchor);
-				
-				$level1Heading.append($level1Title);
+				var $level1LI = $('<li />');
+				$level1LI.append('<a href="https://www.skillscommons.org/discover?query=%22'+item.name+'%22">'+item.name+'</a>' );
+											
+				var $level2UL = $('<ul />');
 
-				$topAccordionDefault.append($level1Heading);
-							
-				var $level2Panel = $('<div id="' + i + '" class="panel-collapse collapse" />');
-				var $level2PanelBody = $('<div class="panel-body" />"');
-				// $level2PanelBody.append('<p><a href="">Search All</a></p>');
-				var $level2PanelGroup = $('<div class="panel-group" id="'+i+'" />');
-				var $level2PanelDefault = $('<div class="panel panel-default" />');
-
-				$level2PanelDefault.append('<div class="panel-heading"><h4 class="panel-title"><a href="https://www.skillscommons.org/discover?query=%22'+item.name+'%22">View All<span class="glyphicon glyphicon-chevron-right" style="float: right;"></span></a></h4></div>' );
 				$.each(item.children, function (c, child) {
 
-					var $level2Heading = $('<div class="panel-heading" />');
-					var $level2Title = $('<h4 class="panel-title" />');
 					var $level2Anchor;
-					
-				
-					// console.log(child.children);
-					if("size" in child) {
-						$level2Anchor = $('<a href="https://www.skillscommons.org/discover?rpp=10&query=%22'+item.name+'+--+'+child.name+'%22" target="_parent" />');
-						$level2Anchor.append(child.name);
-						$level2Anchor.append('<span class="glyphicon glyphicon-chevron-right" style="float: right;"></span>');
-					} else {
-						$level2Anchor = $('<a data-toggle="collapse" data-parent="' + i +'" href="#' + i + "_" + c + '" />');
-						$level2Anchor.append(child.name);
-						$level2Anchor.append('<span class="glyphicon glyphicon-plus" style="float: right;"></span>');
-					}
-					$level2Title.append($level2Anchor);
-					$level2Heading.append($level2Title);
-					
-					$level2PanelDefault.append($level2Heading);
- 
-					
-					var $level3Panel = $('<div id="'+ i + '_' + c + '" class="panel-collapse collapse" />');
-					var $level3PanelBody = $('<div class="panel-body" />');
-					// $level3PanelBody.append('<p>Here will be some intro text for search.</p>');
-					var $level3Table = $('<table class="table" />');
-					var $level3TableBody = $('<tbody />');
-					
-					var parent_size = 0;
-					
+					var $level2LI = $('<li />');
+					$level2Anchor = $('<a href="https://www.skillscommons.org/discover?rpp=10&query=%22'+item.name+'+--+'+child.name+'%22" />');
+					$level2Anchor.append(child.name);
+					$level2LI.append($level2Anchor);
+					$level2UL.append($level2LI); 
+															
 					if ("children" in child) {
-						// $level2Anchor.append('<span class="glyphicon glyphicon-plus" style="float: right;"></span>');
-						$level3Content = '<tr><td><a href="https://www.skillscommons.org/discover?rpp=10&query=%22'+item.name+'+--+'+child.name+'%22">View All</a></td></tr>';
-						$level3TableBody.append($level3Content);
+						$level3UL = $('<ul />');
 
 						$.each(child.children, function (cc, child_child) {
-							$level3Content = '<tr><td><a href="https://www.skillscommons.org/discover?rpp=10&query=%22'+item.name+'+--+'+child.name+'+--+'+child_child.name+'%22">' + child_child.name + '</a></td></tr>';
-							$level3TableBody.append($level3Content);
-							// console.log(child_child);
-							if(child_child.size) {
-								// root_size += child_child.size;
-								parent_size += child_child.size;
-							}
+							$level3Content = '<li><a href="https://www.skillscommons.org/discover?rpp=10&query=%22'+item.name+'+--+'+child.name+'+--+'+child_child.name+'%22">' + child_child.name + '</a></li>';
+							$level3UL.append($level3Content);
 						});
-						$level3Table.append($level3TableBody);
-						$level3PanelBody.append($level3Table);
-						$level3Panel.append($level3PanelBody);
+						$level3LI = $('<li />');
+						$level3LI.append($level3UL);
+						$level2UL.append($level3LI);
 					}
-
-
 					
-					$level2PanelDefault.append($level3Panel);
-					// $topAccordionInnerContent.append($level2Accordion);
-					// $parent_ul.append($parent_li);
+					
 				});
 				
-				$level2PanelGroup.append($level2PanelDefault);
-				$level2PanelBody.append($level2PanelGroup);
-				$level2Panel.append($level2PanelBody);
-				$topAccordionDefault.append($level2Panel);
+				$topUL.append($level1LI);
 				
-//				$top_parent_li.append($parent_ul);
-
-				
-				$topAccordionBody.append($topAccordionDefault);
-				$topAccordion.append($topAccordionBody);
-				// $topAccordion.append($topAccordionGroup);
-
 			});
 
 
-			$('#categories').html($topAccordion);
+			$('#categories').html($topHeading + $topUL);
 
 		});
 	// alert("end function");
