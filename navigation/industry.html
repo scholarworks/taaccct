@@ -32,7 +32,7 @@ $(document).ready(function() {
 			console.log(data.children);
 			console.log(data.children.length);
 			
-			$.each(data[0].children, function (i, item) {
+			$.each(data.children, function (i, item) {
 				
 				var $level1Heading = $('<div class="panel-heading" />');
 				var $level1Title = $('<h4 class="panel-title" />');
