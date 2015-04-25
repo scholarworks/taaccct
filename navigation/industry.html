@@ -120,6 +120,9 @@ $(document).ready(function() {
 
 			$('#categories').html($topAccordion);
 
+		})
+		.fail(function() {
+    console.log( "error" );
 		});
 	// alert("end function");
 });
