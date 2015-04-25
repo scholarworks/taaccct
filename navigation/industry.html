@@ -55,8 +55,11 @@ $(document).ready(function() {
 				var $level2PanelDefault = $('<div class="panel panel-default" />');
 
 				$level2PanelDefault.append('<div class="panel-heading"><h4 class="panel-title"><a href="https://www.skillscommons.org/discover?query=%22'+item.name+'%22">View All<span class="glyphicon glyphicon-chevron-right" style="float: right;"></span></a></h4></div>' );
-				$.each(item.children, function (c, child) {
-
+				// $.each(item.children, function (c, child) {
+				for (var c = 0; c < item.children.length; c++) {
+					
+					child = item.children[c];
+					
 					var $level2Heading = $('<div class="panel-heading" />');
 					var $level2Title = $('<h4 class="panel-title" />');
 					var $level2Anchor;
@@ -110,7 +113,7 @@ $(document).ready(function() {
 					$level2PanelDefault.append($level3Panel);
 					// $topAccordionInnerContent.append($level2Accordion);
 					// $parent_ul.append($parent_li);
-				});
+				}// );
 				
 				$level2PanelGroup.append($level2PanelDefault);
 				$level2PanelBody.append($level2PanelGroup);
