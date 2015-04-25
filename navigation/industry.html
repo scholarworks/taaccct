@@ -19,8 +19,7 @@
 $(document).ready(function() {
 
 	var industryAPI = "http://www.skillscommons.org/portal/api/industries2.php";
-	$.getJSON( industryAPI )
-		.done(function(data) {
+	$.getJSON( industryAPI, function(data) {
 
 			data = JSON.parse(data);
 			
@@ -122,9 +121,6 @@ $(document).ready(function() {
 
 			$('#categories').html($topAccordion);
 
-		})
-		.fail(function() {
-    console.log( "error" );
 		});
 	// alert("end function");
 });
