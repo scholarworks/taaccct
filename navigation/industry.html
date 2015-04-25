@@ -54,15 +54,15 @@ $(document).ready(function() {
 					
 				
 					// console.log(child.children);
-					if("size" in child) {
-						$level2Anchor = $('<a href="https://www.skillscommons.org/discover?rpp=10&query=%22'+item.name+'+--+'+child.name+'%22" target="_parent" />');
-						$level2Anchor.append(child.name);
-						$level2Anchor.append('<span class="glyphicon glyphicon-chevron-right" style="float: right;"></span>');
-					} else {
+					// if("size" in child) {
+					//	$level2Anchor = $('<a href="https://www.skillscommons.org/discover?rpp=10&query=%22'+item.name+'+--+'+child.name+'%22" target="_parent" />');
+					//	$level2Anchor.append(child.name);
+					//	$level2Anchor.append('<span class="glyphicon glyphicon-chevron-right" style="float: right;"></span>');
+					// } else {
 						$level2Anchor = $('<a data-toggle="collapse" data-parent="' + i +'" href="#' + i + "_" + c + '" />');
 						$level2Anchor.append(child.name);
 						$level2Anchor.append('<span class="glyphicon glyphicon-plus" style="float: right;"></span>');
-					}
+					// }
 					$level2Title.append($level2Anchor);
 					$level2Heading.append($level2Title);
 					
