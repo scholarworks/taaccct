@@ -21,6 +21,8 @@ $(document).ready(function() {
 	var industryAPI = "http://www.skillscommons.org/portal/api/industries2.php";
 	$.getJSON( industryAPI, function(data) {
 
+			console.log(data);
+			
 			// data = JSON.parse(data);
 			
 			var $topAccordion = $('<div class="panel panel-group" id="main" />');
