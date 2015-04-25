@@ -19,23 +19,14 @@
 $(document).ready(function() {
 
 	var industryAPI = "http://www.skillscommons.org/portal/api/industries2.php";
-	$.getJSON( industryAPI, function(data) {
+	$.getJSON( industryAPI )
+		.done(function(data) {
 
-			console.log(data);
-			
-			// data = JSON.parse(data);
-			
 			var $topAccordion = $('<div class="panel panel-group" id="main" />');
 			var $topAccordionBody = $('<div class="panel-body" />');
 			var $topAccordionDefault = $('<div class="panel panel-default" />');
 			
-			console.log(data.children);
-			console.log(data.children.length);
-			
-			// $.each(data.children, function (i, item) {
-			for(var i = 0; i < data.children.length; i++) {
-				
-				item = data.children[i];
+			$.each(data.children, function (i, item) {
 				
 				var $level1Heading = $('<div class="panel-heading" />');
 				var $level1Title = $('<h4 class="panel-title" />');
@@ -55,11 +46,8 @@ $(document).ready(function() {
 				var $level2PanelDefault = $('<div class="panel panel-default" />');
 
 				$level2PanelDefault.append('<div class="panel-heading"><h4 class="panel-title"><a href="https://www.skillscommons.org/discover?query=%22'+item.name+'%22">View All<span class="glyphicon glyphicon-chevron-right" style="float: right;"></span></a></h4></div>' );
-				// $.each(item.children, function (c, child) {
-				for (var c = 0; c < item.children.length; c++) {
-					
-					child = item.children[c];
-					
+				$.each(item.children, function (c, child) {
+
 					var $level2Heading = $('<div class="panel-heading" />');
 					var $level2Title = $('<h4 class="panel-title" />');
 					var $level2Anchor;
@@ -113,7 +101,7 @@ $(document).ready(function() {
 					$level2PanelDefault.append($level3Panel);
 					// $topAccordionInnerContent.append($level2Accordion);
 					// $parent_ul.append($parent_li);
-				}// );
+				});
 				
 				$level2PanelGroup.append($level2PanelDefault);
 				$level2PanelBody.append($level2PanelGroup);
@@ -127,7 +115,7 @@ $(document).ready(function() {
 				$topAccordion.append($topAccordionBody);
 				// $topAccordion.append($topAccordionGroup);
 
-			}// );
+			});
 
 
 			$('#categories').html($topAccordion);
